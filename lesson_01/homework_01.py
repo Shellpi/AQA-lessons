@@ -30,6 +30,7 @@ if True:
 
 """
 Hometask 3 + fix.
+
 # task 03  == Вcтавте пропущену змінну у ф-цію print
 for letter in "Hello world!":
     print()
@@ -39,6 +40,8 @@ for letter in 'Hello world!':
     print(letter)
 
 """
+Hometask 4 + 2 fixes.
+
 # task 04 == Зробіть так, щоб кількість бананів була
 # завжди в чотири рази більша, ніж яблук
 apples = 2
@@ -65,6 +68,8 @@ bananas = bananas_count(apples)
 print(apples, bananas)
 
 """
+Hometask 5 + fix.
+
 # task 05 == виправте назви змінних
 1_storona = 1
 ?torona_2 = 2
@@ -78,6 +83,8 @@ storona_3 = 3
 storona_4 = 4
 
 """
+Hometask 6 + fix.
+
 # task 06 == Порахуйте периметр фігури з task 05
 # та виведіть його для користувача
 perimetery = ? + ? + ? + ?
