@@ -41,12 +41,7 @@ alice_in_wonderland = ('"Would you tell me, please, '
                        'Alice added as an explanation.\n'
                        '"Oh, you\'re sure to do that," '
                        'said the Cat, "if you only walk long enough."')
-if alice_in_wonderland.count("'") >= 2:
-    print('There are', alice_in_wonderland.count("'"), 'single quotes present')
-elif alice_in_wonderland.count("'") == 1:
-    print('There is', alice_in_wonderland.count("'"), 'single quote present')
-else:
-    print('Single quotes are missing in the text.')
+print(f' Single quotes num: {alice_in_wonderland.count("'")}')
 
 
 """ Task 3 + code
@@ -126,18 +121,13 @@ b) 9907 : 9     e) 7128 : 5
 c) 2789 : 5     f) 19224 : 9
 """
 
-a = 8019 % 8
-print('The remainder for a is: ', a)
-b = 9907 % 9
-print('The remainder for b is: ', b)
-c = 2789 % 5
-print('The remainder for c is: ', c)
-d = 7248 % 6
-print('The remainder for d is: ', d)
-e = 7128 % 5
-print('The remainder for e is: ', e)
-f = 19224 % 9
-print('The remainder for f is: ', f)
+
+print(f' a) Answer: {8019 % 8} ')
+print(f' b) Answer: {9907 % 9} ')
+print(f' c) Answer: {2789 % 5} ')
+print(f' d) Answer: {7248 % 6} ')
+print(f' e) Answer: {7128 % 5} ')
+print(f' f) Answer: {19224 % 9} ')
 
 """# For cases if you want to test your own input values
 # x = int(input('Input your value: '))
