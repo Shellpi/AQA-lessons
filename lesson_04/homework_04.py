@@ -38,7 +38,7 @@ adwentures_of_tom_sawer = adwentures_of_tom_sawer.replace('\n', ' ')
 Замініть .... на пробіл
 """
 
-adwentures_of_tom_sawer = (adwentures_of_tom_sawer.replace('....', (' ')))
+adwentures_of_tom_sawer = (adwentures_of_tom_sawer.replace('....',' '))
 
 
 """ Task 03 + code
