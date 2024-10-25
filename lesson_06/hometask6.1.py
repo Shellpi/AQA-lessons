@@ -7,8 +7,4 @@
 """
 
 input_chars = input('Input your string:')
-unique_chars = set(input_chars)
-if len(unique_chars) > 10:
-    print(True)
-else:
-    print(False)
+print(len(set(input_chars)) > 10)
