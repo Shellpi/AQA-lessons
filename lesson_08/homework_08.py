@@ -32,10 +32,5 @@ def sum_numbers_in_string(s):
 
 # Test data
 data = ['1,2,3,4', '1,2,3,4,50', 'qwerty1,2,3']
-data2 = []
 
-# Output the sum for each element in the list
-for item in data:
-    result = data2.append(sum_numbers_in_string(item))
-
-print(data2)
+print([sum_numbers_in_string(item) for item in data])
