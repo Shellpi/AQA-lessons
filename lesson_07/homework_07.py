@@ -81,7 +81,7 @@ print(TASK_START_TEMPLATE.format('04'))
 
 def reversed_input(inp_us):
     """Функия принимает строку и возвращает ее в обдратном порядке."""
-    return f"Ваша перевернутая строка: {''.join(reversed(inp_us))}"
+    return f"Ваша перевернутая строка: {inp_us[::-1]}"
 
 
 # Пример использования
@@ -197,13 +197,13 @@ print(even_sum)  # Результат: Сумма парных чисел рав
 print(TASK_START_TEMPLATE.format('09'))
 
 
-def letter_counter(text, letter):
+def string_counter(text, string):
     """Функция для подсчета выбранной буквы в тексте.
 
     Функция считает как прописные так и строчные буквы.
     """
-    let_counter = text.lower().count(letter.lower())
-    return f'В тексте Ваша буква/слово встречается {let_counter} раз.'
+    str_counter = text.lower().count(string.lower())
+    return f'В тексте Ваша буква/слово встречается {str_counter} раз.'
 
 
 # Пример использования
@@ -229,7 +229,7 @@ in for a dead rat and a string to swing it with—and so on, and so on,
 hour after hour. And when the middle of the afternoon came, from being a
 poor poverty, stricken boy in the .... morning, Tom was literally
 rolling in wealth."""
-print(letter_counter(adwentures_of_tom_sawer, 'iN'))  # Результат: 15
+print(string_counter(adwentures_of_tom_sawer, 'iN'))  # Результат: 15
 
 
 """Task 10.
