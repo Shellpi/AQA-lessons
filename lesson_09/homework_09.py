@@ -31,13 +31,11 @@ def list_sum(list1, list2):
     If the len of one of the lists is longer, a '0' value
     is set for the missing element.
     """
-    # Create 2 dictionaries from our lists with indexes as a key
-    d1 = {i: list1[i] for i in range(len(list1))}
-    d2 = {i: list2[i] for i in range(len(list2))}
-
-    # New list generation with max list len using
-    new_list = [(d1.get(i, 0), d2.get(i, 0))
-                for i in range(max(len(list1), len(list2)))]
+    # Using max length of lists to iterate through all indices
+    new_list = [
+        (list1[i] if i < len(list1) else 0, list2[i] if i < len(list2) else 0)
+        for i in range(max(len(list1), len(list2)))
+    ]
     return new_list
 
 
