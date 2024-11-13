@@ -32,10 +32,9 @@ def list_sum(list1, list2):
     is set for the missing element.
     """
     # Using max length of lists to iterate through all indexes
-    new_list = [
-        (list1[i] if i < len(list1) else 0, list2[i] if i < len(list2) else 0)
-        for i in range(max(len(list1), len(list2)))
-    ]
+new_list = [(list1[i] if i < len(list1) else 0,
+                 list2[i] if i < len(list2) else 0)
+                for i in range(max(len(list1), len(list2)))]
     return new_list
 
 
