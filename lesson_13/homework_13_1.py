@@ -30,6 +30,26 @@ def download_file(url, local_path):
         print(f'An error occurred: {err}')
 
 
+def read_csv_file(file_path):
+    """Read a CSV file and return its data as a list of rows."""
+    with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.reader(file)
+
+        # Check if the file is empty
+        first_row = next(reader, None)
+        if not first_row:
+            raise ValueError(f'The CSV file "{file_path}" is empty.')
+
+        # Return the rest of the file as a list of rows
+        return [first_row] + list(reader)
+
+
+def delete_file(file_path):
+    """Delete a file if it exists."""
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+
 def csv_duplicate_remover(file1_url, file2_url, result_file):
     """Download and remove duplicates from 2 csv files."""
     # File downloading
@@ -39,43 +59,26 @@ def csv_duplicate_remover(file1_url, file2_url, result_file):
     download_file(file2_url, file2)
 
     try:
-        with open(file1, mode='r', newline='', encoding='utf-8') as f1:
-            reader1 = csv.reader(f1)
-
-            # Check if the file is empty
-            first_row = next(reader1, None)
-            if not first_row:
-                raise ValueError('The CSV file is empty.')
-            data1 = list(reader1)
-
-        with open(file2, mode='r', newline='', encoding='utf-8') as f2:
-            reader2 = csv.reader(f2)
-
-            # Check if the file is empty
-            first_row = next(reader2, None)
-            if not first_row:
-                raise ValueError('The CSV file is empty.')
-            data2 = list(reader2)
+        # Read data from both files using the helper function
+        data1 = read_csv_file(file1)
+        data2 = read_csv_file(file2)
 
         # Collect all data from both files.
         all_data = data1 + data2
-        # Duplicate removing.
-        unique_data = [list(line)
-                       for line in {tuple(row) for row in all_data}]
 
-        with (open(result_file, mode='w', newline='', encoding='utf-8')
-              as result):
-            surname = csv.writer(result)
-            surname.writerow(unique_data)
+        # Remove duplicates.
+        unique_data = [list(line) for line in {tuple(row) for row in all_data}]
 
-        return f'Duplicates has been removed. Check the file {result_file}'
+        # Write the unique data to the result file
+        with open(result_file, mode='w', newline='', encoding='utf-8') as res:
+            writer = csv.writer(res)
+            writer.writerows(unique_data)
+
+        return f'Duplicates have been removed. Check the file "{result_file}".'
 
     finally:
-        # Delete the downloaded files
-        if os.path.exists(file1):
-            os.remove(file1)
-        if os.path.exists(file2):
-            os.remove(file2)
+        delete_file(file1)
+        delete_file(file2)
 
 
 # URLs to raw CSV files on GitHub

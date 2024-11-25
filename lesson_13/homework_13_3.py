@@ -38,8 +38,14 @@ def download_file(url, local_path):
         file.write(response.content)
 
 
-def find_timing_incoming(file_url, logger):
-    """Find the timingExbytes/incoming value in the selected group."""
+def delete_file(file_path):
+    """Delete a file if it exists."""
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+
+def find_timing_incoming(file_url, group_number, logger):
+    """Find the timingExbytes/incoming value for the selected group."""
     file = 'file.xml'
 
     try:
@@ -49,23 +55,14 @@ def find_timing_incoming(file_url, logger):
         groups = root.findall('group')
         group_numbers = [int(group.find('number').text) for group in groups
                          if group.find('number') is not None]
-        min_g = min(group_numbers)
-        max_g = max(group_numbers)
 
-        while True:
-            try:
-                selected_gp = int(input(f'Select the group from '
-                                        f'{min_g} to {max_g}: '))
-                if selected_gp in group_numbers:
-                    break
-                else:
-                    print('The group is missing. Try again.')
-            except ValueError:
-                print('Select the correct number.')
+        if group_number not in group_numbers:
+            logger.info(f'The group {group_number} does not exist.')
+            return
 
         for group in groups:
             number = int(group.find('number').text)
-            if number == selected_gp:
+            if number == group_number:
                 incoming_value = group.find('./timingExbytes/incoming')
                 if incoming_value is not None:
                     logger.info(f'The timingExbytes/incoming value for group '
@@ -79,13 +76,12 @@ def find_timing_incoming(file_url, logger):
         logger.error(f'An error has been found: {err}')
 
     finally:
-        # Delete the downloaded files
-        if os.path.exists(file):
-            os.remove(file)
+        delete_file(file)
 
 
 if __name__ == '__main__':
     logger = logger_setup()
     file_url = ('https://raw.githubusercontent.com/dntpanix/automation_qa/refs'
                 '/heads/main/ideas_for_test/work_with_xml/groups.xml')
-    find_timing_incoming(file_url, logger)
+    selected_group = 2
+    find_timing_incoming(file_url, selected_group, logger)

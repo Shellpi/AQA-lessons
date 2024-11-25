@@ -44,36 +44,49 @@ def file_downloader(url, local_path, logger):
         raise
 
 
+def download_files(urls, logger):
+    """Download all files from a list of URLs."""
+    downloaded_files = []
+    for url in urls:
+        file_name = os.path.basename(url)  # Get the file name
+        try:
+            file_downloader(url, file_name, logger)
+            downloaded_files.append(file_name)
+        except Exception as err:
+            logger.error(f'Error downloading {url}: {err}')
+            continue
+    return downloaded_files
+
+
+def delete_file(file_path):
+    """Delete a file if it exists."""
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+
+def validate_json_files(files, logger):
+    """Validate a list of JSON files."""
+    invalid_files = []
+    for json_file in files:
+        try:
+            with open(json_file, 'r', encoding='utf-8') as json_fh:
+                json.load(json_fh)
+        except json.decoder.JSONDecodeError as j_err:
+            logger.error(f'Invalid JSON {json_file}: {j_err}')
+            invalid_files.append(json_file)
+    return invalid_files
+
+
 def json_valid_checker(urls, logger):
     """Check JSON validity of downloaded files."""
     downloaded_files = []
-    invalid_files = []
-
     try:
-        for url in urls:
-            file_name = os.path.basename(url)  # Get the file name
-            try:
-                file_downloader(url, file_name, logger)
-                downloaded_files.append(file_name)
-            except Exception as err:
-                logger.error(f'Error downloading {url}: {err}')
-                continue
-
-        for json_file in downloaded_files:
-            try:
-                with open(json_file, 'r', encoding='utf-8') as json_fh:
-                    json.load(json_fh)
-            except json.decoder.JSONDecodeError as j_err:
-                logger.error(f'Invalid JSON {json_file}: {j_err}')
-                invalid_files.append(json_file)
-
+        downloaded_files = download_files(urls, logger)
+        invalid_files = validate_json_files(downloaded_files, logger)
+        return f'Invalid: {invalid_files}' if invalid_files else 'Files valid.'
     finally:
-        # Remove our files.
-        for json_file in downloaded_files:
-            if os.path.exists(json_file):
-                os.remove(json_file)
-
-    return f'Invalid: {invalid_files}' if invalid_files else 'Files are valid.'
+        for file in downloaded_files:
+            delete_file(file)
 
 
 if __name__ == '__main__':
